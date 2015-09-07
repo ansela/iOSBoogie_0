@@ -58,6 +58,26 @@ class ViewController: UIViewController {
         
         // to sort an array in swift: http://stackoverflow.com/questions/25223058/how-to-sort-an-array-in-swift
         
+        let fileContentsArr = fileContents.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        var wordCountDictionary = Dictionary<String, Int>()
+        
+        for word in fileContentsArr {
+            let modifiedWord = word.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            
+            if let existingCount = wordCountDictionary[modifiedWord] {
+                wordCountDictionary[modifiedWord]!++
+            }
+            else {
+                wordCountDictionary[modifiedWord] = 1
+            }
+        }
+        
+        var wordArr = Array(wordCountDictionary.keys)
+        var sortedWordArr = wordArr.sorted { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        for word in sortedWordArr {
+            let count = wordCountDictionary[word]!
+            println("\(word) \(count)")
+        }
         
     }
     
